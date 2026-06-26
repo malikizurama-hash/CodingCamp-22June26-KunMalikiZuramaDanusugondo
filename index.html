@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense & Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- Storage Error Banner -->
+    <div id="storage-banner" class="storage-banner hidden" role="alert">
+      ⚠ Data tidak dapat disimpan. Aplikasi berjalan sementara.
+    </div>
+
+    <!-- Header -->
+    <header>
+      <h1>Expense & Budget Visualizer</h1>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙 Dark Mode</button>
+    </header>
+
+    <!-- Balance Display -->
+    <section id="balance-section">
+      <h2>Total Pengeluaran</h2>
+      <p id="balance-display">Rp 0</p>
+      <div id="budget-limit-indicator" class="budget-indicator hidden" role="status" aria-live="polite"></div>
+      <form id="budget-limit-form" class="budget-limit-form" novalidate>
+        <label for="input-budget-limit">Budget Limit (Rp)</label>
+        <div class="budget-limit-row">
+          <input
+            type="text"
+            id="input-budget-limit"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="Masukkan limit (kosongkan = nonaktif)"
+          />
+          <button type="submit" class="btn-set-limit">Set Limit</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Input Form -->
+    <section id="form-section">
+      <h2>Tambah Transaksi</h2>
+      <form id="transaction-form" novalidate>
+        <div class="form-group">
+          <label for="input-name">Item Name</label>
+          <input
+            type="text"
+            id="input-name"
+            name="name"
+            maxlength="100"
+            placeholder="Nama pengeluaran"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="input-amount">Amount (Rp)</label>
+          <input
+            type="text"
+            id="input-amount"
+            name="amount"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="Jumlah pengeluaran"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="input-category">Category</label>
+          <select id="input-category" name="category">
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Fun">Fun</option>
+          </select>
+        </div>
+
+        <div id="form-error" class="form-error" role="alert" aria-live="polite"></div>
+
+        <button type="submit" class="btn-submit">Tambah Transaksi</button>
+      </form>
+    </section>
+
+    <!-- Main Content: Transaction List + Chart -->
+    <main id="main-content">
+
+      <!-- Transaction List -->
+      <section id="list-section">
+        <div class="list-header">
+          <h2>Riwayat Transaksi</h2>
+          <div class="sort-wrapper">
+            <label for="sort-control">Urutkan:</label>
+            <select id="sort-control">
+              <option value="newest">Terbaru</option>
+              <option value="amount-high">Amount Tertinggi</option>
+              <option value="amount-low">Amount Terendah</option>
+              <option value="category-az">Category (A–Z)</option>
+            </select>
+          </div>
+        </div>
+        <ul id="transaction-list" aria-label="Daftar transaksi"></ul>
+      </section>
+
+      <!-- Chart -->
+      <section id="chart-section">
+        <h2>Distribusi Pengeluaran</h2>
+        <div id="chart-container">
+          <canvas id="expense-chart" role="img" aria-label="Pie chart distribusi pengeluaran per kategori"></canvas>
+          <p id="chart-empty-message" class="hidden">Tidak ada data untuk ditampilkan.</p>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- App -->
+  <script src="js/app.js" defer></script>
+</body>
+</html>
